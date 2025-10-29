@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
+
+@theme inline {
+  --color-bg: var(--clr-white);
+  --color-fg: var(--clr-black);
+  --color-wtransp: var(--clr-white-transperent);
+  --color-gray90: var(--clr-gray-90);
+  --color-accent: var(--clr-accent-normal);
+  --color-accent-hover: var(--clr-accent-hover);
+  --color-accent-pressed: var(--clr-accent-pressed);
+
+  --font-instrument: var(--font-instrument);
+  --font-rethink: var(--font-rethink);
+
+  --text-28px: var(--text-28px);
+}
+
+@layer base {
+  :root {
+    --clr-white: #f9fafc;
+    --clr-black: #212121;
+    --clr-accent-normal: #f7c7d1;
+    --clr-accent-hover: #fbabbc;
+    --clr-accent-pressed: #f1899f;
+
+    --clr-gray-90: rgba(36, 36, 36, 1);
+    --clr-white-transperent: rgba(255, 255, 255, 0.4);
+
+    --font-instrument: "Instrument Serif", serif;
+    --font-rethink: "Rethink Sans", sans-serif;
+
+    --text-28px: 1.75rem;
+  }
+
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
