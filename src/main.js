@@ -7,11 +7,11 @@ V.updateHeroImage = function (heroImage) {
   if (!heroImage) return;
 
   if (window.innerWidth >= 768) {
-    heroImage.classList.remove("bg-[url('/public/img/hero-mobile.jpg')]");
-    heroImage.classList.add("bg-[url('/public/img/hero-desktop.jpg')]");
+    heroImage.classList.remove("bg-[url('./img/hero-mobile.jpg')]");
+    heroImage.classList.add("bg-[url('./img/hero-desktop.jpg')]");
   } else {
-    heroImage.classList.remove("bg-[url('/public/img/hero-desktop.jpg')]");
-    heroImage.classList.add("bg-[url('/public/img/hero-mobile.jpg')]");
+    heroImage.classList.remove("bg-[url('./img/hero-desktop.jpg')]");
+    heroImage.classList.add("bg-[url('./img/hero-mobile.jpg')]");
   }
 };
 
@@ -19,11 +19,11 @@ V.updateFooterImage = function (footerImage) {
   if (!footerImage) return;
 
   if (window.innerWidth >= 768) {
-    footerImage.classList.remove("bg-[url('/public/img/footer-mobile.jpg')]");
-    footerImage.classList.add("bg-[url('/public/img/footer-desktop.jpg')]");
+    footerImage.classList.remove("bg-[url('./img/footer-mobile.jpg')]");
+    footerImage.classList.add("bg-[url('./img/footer-desktop.jpg')]");
   } else {
-    footerImage.classList.remove("bg-[url('/public/img/footer-desktop.jpg')]");
-    footerImage.classList.add("bg-[url('/public/img/footer-mobile.jpg')]");
+    footerImage.classList.remove("bg-[url('./img/footer-desktop.jpg')]");
+    footerImage.classList.add("bg-[url('./img/footer-mobile.jpg')]");
   }
 };
 V.formatTag = function (tag) {
