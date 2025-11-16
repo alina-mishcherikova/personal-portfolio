@@ -1,31 +1,49 @@
 //change hero photo based on screen size
 let M = {};
-M.projects = window.PROJECTS || [];
+M.projects = [
+  {
+    id: "1",
+    tags: ["Front End", "Back End", "LAPM"],
+    url: "gestion_de_film_lamp.webp",
+    addPhoto1: "gestion_de_film_1.webp",
+    addPhoto2: "gestion_de_film_2.webp",
+    alt: "mackbook pro with site streaming",
+    info: {
+      title: "[EDU] Développement d'un site de gestion de films",
+      photo: "./asset/project.png",
+      description:
+        "Ce projet consistait à concevoir et développer une application web de gestion de films. J'ai travaillé sur la mise en place de la structure du site, l'évolution de la base de données, ainsi que sur l'ajout progressif de fonctionnalités côté utilisateur et administrateur. Le projet s'est conclu par l'hébergement sécurisé sur un serveur LAMP, avec une protection par mot de passe pour l'espace administrateur.",
+      developement:
+        " Ce projet m'a permis de comprendre toutes les étapes du développement d'un site web, de la conception à la mise en ligne. J'y ai renforcé mes compétences en développement, gestion de base de données et hébergement sécurisé. Grâce au travail par itérations et à l'utilisation de GitHub, j'ai appris à mieux organiser mon code et à collaborer efficacement. La mise en place du certificat SSL et la protection de l'espace administrateur m'ont également sensibilisée aux bonnes pratiques de sécurité web.",
+      date: "avril 2025",
+      link: "https://github.com/alina-mishcherikova/SAE2.03-mishcherikova",
+      additionalLink: "https://mishcherikova-sae203.mmi-limoges.fr/",
+    },
+  },
+  // {
+  //   id: "2",
+
+  //   tags: ["Figma", "Back End", "LAPM"],
+  //   url: "gestion_de_film_lamp.webp",
+  //   addPhoto1: "gestion_de_film_1.webp",
+  //   addPhoto2: "gestion_de_film_2.webp",
+  //   alt: "mackbook pro with site streaming",
+  //   info: {
+  //     title: "[EDU] Concevoir une recommandation de communication numérique",
+  //     photo: "./asset/project.png",
+  //     description:
+  //       "Ce projet consistait à concevoir et développer une application web de gestion de films. J'ai travaillé sur la mise en place de la structure du site, l'évolution de la base de données, ainsi que sur l'ajout progressif de fonctionnalités côté utilisateur et administrateur. Le projet s'est conclu par l'hébergement sécurisé sur un serveur LAMP, avec une protection par mot de passe pour l'espace administrateur.",
+  //     developement:
+  //       " Ce projet m'a permis de comprendre toutes les étapes du développement d'un site web, de la conception à la mise en ligne. J'y ai renforcé mes compétences en développement, gestion de base de données et hébergement sécurisé. Grâce au travail par itérations et à l'utilisation de GitHub, j'ai appris à mieux organiser mon code et à collaborer efficacement. La mise en place du certificat SSL et la protection de l'espace administrateur m'ont également sensibilisée aux bonnes pratiques de sécurité web.",
+  //     date: "avril 2025",
+  //     link: "https://github.com/alina-mishcherikova/SAE2.03-mishcherikova",
+  //     additionalLink: "https://mishcherikova-sae203.mmi-limoges.fr/",
+  //   },
+  // },
+];
 
 let V = {};
-V.updateHeroImage = function (heroImage) {
-  if (!heroImage) return;
 
-  if (window.innerWidth >= 768) {
-    heroImage.classList.remove("bg-[url('./img/hero-mobile.jpg')]");
-    heroImage.classList.add("bg-[url('./img/hero-desktop.jpg')]");
-  } else {
-    heroImage.classList.remove("bg-[url('./img/hero-desktop.jpg')]");
-    heroImage.classList.add("bg-[url('./img/hero-mobile.jpg')]");
-  }
-};
-
-V.updateFooterImage = function (footerImage) {
-  if (!footerImage) return;
-
-  if (window.innerWidth >= 768) {
-    footerImage.classList.remove("bg-[url('./img/footer-mobile.jpg')]");
-    footerImage.classList.add("bg-[url('./img/footer-desktop.jpg')]");
-  } else {
-    footerImage.classList.remove("bg-[url('./img/footer-desktop.jpg')]");
-    footerImage.classList.add("bg-[url('./img/footer-mobile.jpg')]");
-  }
-};
 V.formatTag = function (tag) {
   let template = document.querySelector("#project-tag");
   let html = template.innerHTML;
@@ -35,6 +53,7 @@ V.formatTag = function (tag) {
 };
 
 V.formatProject = function (p) {
+  console.log("formatting project:", p);
   let template = document.querySelector("#project-template");
   let html = template.innerHTML;
 
@@ -53,8 +72,11 @@ V.formatProject = function (p) {
 
   return html;
 };
+
 V.formatProjectDetail = function (p) {
   let template = document.querySelector("#project-detail");
+  if (!template) return "";
+
   let html = template.innerHTML;
 
   html = html.replaceAll("{{url}}", p.url);
@@ -65,51 +87,80 @@ V.formatProjectDetail = function (p) {
   html = html.replaceAll("{{addPhoto2}}", p.addPhoto2);
   html = html.replace("{{link}}", p.info.link);
   html = html.replace("{{additionalLink}}", p.info.additionalLink);
-  document.querySelector("section").innerHTML = html;
+  html = html.replaceAll("{{alt}}", p.alt || p.info.title);
+
+  return html;
+};
+V.openProjectModal = function (projectId) {
+  const proj = M.projects.find((p) => p.id === projectId);
+  if (!proj) return;
+
+  const modal = document.querySelector("#project-modal");
+  const content = document.querySelector("#project-modal-content");
+
+  content.innerHTML = V.formatProjectDetail(proj);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 };
 
-V.renderProject = function (data) {
-  let allHtmlItem = "";
-  for (let i = 0; i < data.length; i++) {
-    allHtmlItem += V.formatProject(data[i]);
-  }
-  document.querySelector("#projects").innerHTML = allHtmlItem;
+V.closeProjectModal = function () {
+  const modal = document.querySelector("#project-modal");
+  const content = document.querySelector("#project-modal-content");
+  if (!modal) return;
 
-  V.attachProjectClickHandlers();
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  content.innerHTML = "";
 };
 
 V.attachProjectClickHandlers = function () {
-  const projectCards = document.querySelectorAll("#projects article[data-id]");
-  projectCards.forEach((card) => {
-    card.addEventListener("click", function () {
-      const projectId = this.getAttribute("data-id");
-      window.location.href = `detail.html?id=${encodeURIComponent(projectId)}`;
-    });
+  const container = document.querySelector("#projects");
+  if (!container) return;
+
+  container.addEventListener("click", function (e) {
+    const article = e.target.closest("article[data-id]");
+    if (!article) return;
+
+    const id = article.dataset.id;
+    V.openProjectModal(id);
   });
+
+  const closeBtn = document.querySelector("#modal-close");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", V.closeProjectModal);
+  }
+
+  const modal = document.querySelector("#project-modal");
+  if (modal) {
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        V.closeProjectModal();
+      }
+    });
+  }
+};
+
+V.renderProject = function (data) {
+  console.log("im here");
+  let allHtmlItem = "";
+  for (let i = 0; i < data.length; i++) {
+    console.log(data.length);
+    console.log(data);
+    console.log(data[i]);
+    allHtmlItem += V.formatProject(data[i]);
+  }
+  document.querySelector("#projects").innerHTML = allHtmlItem;
 };
 
 V.init = function () {
-  let heroImage = document.getElementById("hero-img");
-  let footerImage = document.getElementById("contacts");
   let burgernav = document.querySelector("#burger-btn");
 
   if (burgernav) {
     burgernav.addEventListener("click", C.BurgerButtonHandler);
   }
 
-  V.updateHeroImage(heroImage);
-  V.updateFooterImage(footerImage);
-
-  let resizeTimeout;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(function () {
-      V.updateHeroImage(heroImage);
-      V.updateFooterImage(footerImage);
-    }, 150);
-  });
-
   V.renderProject(M.projects);
+  V.attachProjectClickHandlers();
 };
 
 let C = {};
@@ -128,7 +179,6 @@ C.BurgerButtonHandler = function () {
   burgerBtn.classList.toggle("burger-open");
 
   header.classList.add("align-top");
-  header.classList.toggle("items-center");
   header.classList.toggle("items-start");
   menuNav.classList.add("flex-col");
   menu.classList.toggle("hidden");
